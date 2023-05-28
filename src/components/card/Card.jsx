@@ -1,21 +1,25 @@
 import React from 'react';
 import "./Card.css";
 const Card = (props) => {
-   const {name,price,ratings,seller,img}=props.product;
-   const addToCardHandler=(product)=>{
-    console.log(product)
-   }
+    const {card}=props;
+    let total=0;
+    let shipping=0;
+    for (const price of card) {
+        total=total+price.price;
+        shipping=shipping+price.shipping
+    }
+    const tax=total*10/100;
+   const grandTotal=total+shipping+tax;
     return (
-      
-         <div className="card">
-         <img src={img} alt="" />
-            <h3>{name}</h3>
-            <h4>Price: ${price}</h4>
-            <h5>Manufacturer: {seller}</h5>
-            <h6>Rating: {ratings}</h6>
-            <button onClick={()=>addToCardHandler(props)}>Add To Card</button>
-         </div>
-
+        <div>
+       <h3>Order Summary</h3>
+            <p>Selected Items: {props.card.length}</p>
+            <p>Total Price: ${total.toFixed(2)}</p>
+            <p>Shipping: ${shipping.toFixed(2)}</p>
+            <p>Tax: ${tax.toFixed(2)}</p>
+            <p>Grand Total: ${grandTotal.toFixed(2)}</p>
+           </div>
+    
     );
 };
 
